@@ -59,9 +59,77 @@ class Users:
     def getUsersFilter(self):
         pass
 
-    # TODO skip and limit users
+    # build url for skip and limit
+    def skipLimitUrl(self, skip, limit, url):
+        if limit.isnumeric():
+            url += "?limit=" + limit
+        elif skip.isnumeric():
+            url += "?skip=" + skip
+        
+        if limit.isnumeric() and skip.isnumeric():
+            url += "&skip=" + skip
+        return url
+    
+    # build url for selections
+    def selectItems(self, skip, limit, selections, url):
+        URL = self.skipLimitUrl(skip=skip, limit=limit, url=url)
+
+        if selections is None:
+            selections = self.getParameterKeys()
+        
+        if not limit.isnumeric() and not skip.isnumeric() and all(el in self.getParameterKeys() for el in selections):
+            URL += "?select="
+            selectLen = len(selections)
+
+            for i, item in enumerate(selections):
+                if "." in item:
+                    if i == selectLen - 1:
+                        URL += item.split(".")[0]
+                    else:
+                        URL += item.split(".")[0] + ","
+                else:
+                    if i == selectLen - 1:
+                        URL += item
+                    else:
+                        URL += item + ","
+
+        
+        if (limit.isnumeric() or skip.isnumeric()) and all(el in self.getParameterKeys() for el in selections):
+            URL += "&select="
+
+            selecLen = len(selections)
+
+            for i, item in enumerate(selections):
+                if "." in item:
+                    if i == selecLen - 1:
+                        URL += item.split(".")[0]
+                    else:
+                        URL += item.split(".")[0] + ","
+                else:
+                    if i == selecLen - 1:
+                        URL += item
+                    else:
+                        URL += item + ","
+        return URL
+
+    # skip and limit users
     def getUsersLimit(self, limit, skip, selections):
-        pass
+        URL = self.selectItems(skip=skip, limit=limit, selections=selections, url=self.url)
+
+        if URL is not None:
+            response = requests.get(URL)
+
+            if response:
+                responseJSON = response.json()
+                for user in responseJSON["users"]:
+                    print("--------------------------------------------------------------")
+                    for userKey, userValue in user.items():
+                        print(userKey + ": ", userValue)
+                    print("--------------------------------------------------------------")
+            else:
+                print("Error with request")
+        else:
+            print("invalide input parameters")
 
     # get user's carts
     def getUserCartsByID(self, userID):
