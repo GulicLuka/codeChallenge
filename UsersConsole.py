@@ -31,6 +31,9 @@ class UserConsole:
             print("*******************************************")
 
             option = input("Input your selection: ")
+            
+            # used just to get parameters
+            #users.getParameters()
 
             if option == "1":
                 # get all users

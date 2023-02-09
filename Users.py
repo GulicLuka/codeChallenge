@@ -4,6 +4,7 @@ import json
 class Users:
     def __init__(self):
         self.url = 'https://dummyjson.com/users'
+        self.parameters = ['id', 'firstName', 'lastName', 'maidenName', 'age', 'gender', 'email', 'phone', 'username', 'password', 'birthDate', 'image', 'bloodGroup', 'height', 'weight', 'eyeColor', 'hair.color', 'hair.type', 'domain', 'ip', 'address.address', 'address.city', 'address.coordinates.lat', 'address.coordinates.lng', 'address.postalCode', 'address.state', 'macAddress', 'university', 'bank.cardExpire', 'bank.cardNumber', 'bank.cardType', 'bank.currency', 'bank.iban', 'company.address.address', 'company.address.city', 'company.address.coordinates.lat', 'company.address.coordinates.lng', 'company.address.postalCode', 'company.address.state', 'company.department', 'company.name', 'company.title', 'ein', 'ssn', 'userAgent']
     
     # get all users
     def getAllUsers(self):
@@ -143,3 +144,35 @@ class Users:
             print("user deleted succesfully")
         else:
             print("Error deleting user with ID ( " + userID + " )")
+
+    
+    # helper methods
+    # get user dict keys
+    def getParameters(self):
+        URL = self.url + "/1" 
+        response = requests.get(URL)
+
+        if response:
+            responseJSON = response.json()
+            parameters = self.parameterRecursion(JSON=responseJSON, d="")
+            print(parameters)
+
+    def parameterRecursion(self, JSON, d=""):
+        if not isinstance(JSON, dict):
+            return [ d ]
+        
+        par = []
+        for key, value in JSON.items():
+            if isinstance(value, dict):
+                if d == "":
+                    par.extend(self.parameterRecursion(JSON[key], d+key))
+                else:
+                    par.extend(self.parameterRecursion(JSON[key], d+"."+key))
+            else:
+                if d == "":
+                    par.extend(self.parameterRecursion(key, d+key))
+                else:
+                    par.extend(self.parameterRecursion(key, d+"."+key))
+        return par
+    
+            
