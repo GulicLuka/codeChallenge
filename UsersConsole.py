@@ -107,9 +107,18 @@ class UserConsole:
             itemIDs = selectString.split(",")
         else:
             itemIDs = list(selectString)
-        try:
-            itemIDs = list(map(int, itemIDs))
-            selections = map(keys.__getitem__, itemIDs)
+
+        itemIDsInt = []
+        for item in itemIDs:
+            if item.isnumeric():
+                try:
+                    num = int(item)
+                    if num < len(keys):
+                        itemIDsInt.append(num)
+                except Exception:
+                    pass
+        try:        
+            selections = map(keys.__getitem__, itemIDsInt)
         except Exception:
             print("Invalid input")
             return None
