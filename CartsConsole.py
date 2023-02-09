@@ -1,8 +1,11 @@
 import os
+from Carts import Carts
 
 class CartConsole:
 
     def cartFunctionsMenu():
+        carts = Carts()
+
         if os.name == "posix":
             os.system("clear")
         else:
@@ -27,7 +30,7 @@ class CartConsole:
 
             if option == "1":
                 # get all carts
-                pass
+                carts.getAllCarts()
             elif option == "2":
                 # get a single cart
                 pass
