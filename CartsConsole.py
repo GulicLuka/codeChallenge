@@ -33,14 +33,18 @@ class CartConsole:
                 carts.getAllCarts()
             elif option == "2":
                 # get a single cart
-                cartID = input("Insert user ID: ")
+                cartID = input("Insert cart ID: ")
                 if cartID.isnumeric():
                     carts.getCartByID(cartID=cartID)
                 else:
                     print("Invalid input for ID")
             elif option == "3":
                 # get carts of user
-                pass           
+                userID = input("Insert user ID: ")
+                if userID.isnumeric():
+                    carts.getUserCarts(userID=userID)
+                else:
+                    print("Invalid input for ID")       
             elif option == "4":
                 # add cart
                 pass
@@ -49,7 +53,11 @@ class CartConsole:
                 pass
             elif option == "6":
                 # delete cart
-                pass
+                cartID = input("Insert cart ID: ")
+                if cartID.isnumeric():
+                    carts.deleteCart(cartID=cartID)
+                else:
+                    print("Invalid input for ID")
             elif option == "0":
                 # go back
                 return
