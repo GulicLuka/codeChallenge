@@ -6,6 +6,10 @@ class Users:
         self.url = 'https://dummyjson.com/users'
         self.parameters = ['id', 'firstName', 'lastName', 'maidenName', 'age', 'gender', 'email', 'phone', 'username', 'password', 'birthDate', 'image', 'bloodGroup', 'height', 'weight', 'eyeColor', 'hair.color', 'hair.type', 'domain', 'ip', 'address.address', 'address.city', 'address.coordinates.lat', 'address.coordinates.lng', 'address.postalCode', 'address.state', 'macAddress', 'university', 'bank.cardExpire', 'bank.cardNumber', 'bank.cardType', 'bank.currency', 'bank.iban', 'company.address.address', 'company.address.city', 'company.address.coordinates.lat', 'company.address.coordinates.lng', 'company.address.postalCode', 'company.address.state', 'company.department', 'company.name', 'company.title', 'ein', 'ssn', 'userAgent']
     
+    # getter method
+    def getParameterKeys(self):
+        return self.parameters
+
     # get all users
     def getAllUsers(self):
         response = requests.get(self.url)
@@ -56,7 +60,7 @@ class Users:
         pass
 
     # TODO skip and limit users
-    def getUsersLimit(self):
+    def getUsersLimit(self, limit, skip, selections):
         pass
 
     # get user's carts

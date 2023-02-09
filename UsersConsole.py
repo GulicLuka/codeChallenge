@@ -31,7 +31,7 @@ class UserConsole:
             print("*******************************************")
 
             option = input("Input your selection: ")
-            
+
             # used just to get parameters
             #users.getParameters()
 
@@ -54,7 +54,10 @@ class UserConsole:
                 users.getUsersFilter()
             elif option == "5":
                 # limit & skip user
-                users.getUsersLimit()
+                limit = input("number of items you would like to get (0 - get all items): ")
+                skip = input("number of items you would like to skip: ")
+                selections = UserConsole.getSelections(keys=users.getParameterKeys())
+                users.getUsersLimit(limit=limit, skip=skip, selections=selections)
             elif option == "6":
                 # get user's carts
                 userID = input("Insert user ID: ")
@@ -94,3 +97,20 @@ class UserConsole:
                 return
             else:
                 print("Invalid option, try selecting number from 0 to 11")
+
+    def getSelections(keys):
+        for i, key in enumerate(keys):
+            print(i,key)
+
+        selectString = input("write comma separated numbers, that you want to select from list above: ")
+        if len(selectString) > 1:
+            itemIDs = selectString.split(",")
+        else:
+            itemIDs = list(selectString)
+        try:
+            itemIDs = list(map(int, itemIDs))
+            selections = map(keys.__getitem__, itemIDs)
+        except Exception:
+            print("Invalid input")
+            return None
+        return list(selections)
