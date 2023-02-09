@@ -1,8 +1,10 @@
 import os
+from Users import Users
 
 class UserConsole:
 
     def userFunctionsMenu():
+        users = Users()
         if os.name == "posix":
             os.system("clear")
         else:
@@ -32,7 +34,7 @@ class UserConsole:
 
             if option == "1":
                 # get all users
-                pass
+                users.getAllUsers()
             elif option == "2":
                 # get a single user
                 pass
