@@ -1,4 +1,6 @@
 import os
+from UsersConsole import UserConsole
+from CartsConsole import CartConsole
 
 while True:
     if os.name == "posix":
@@ -15,10 +17,11 @@ while True:
 
     if option == "1":
         # Users functions
+        UserConsole.userFunctionsMenu()
         pass
     elif option == "2":
         # Carts functions
-        pass
+        CartConsole.cartFunctionsMenu()
     elif option == "3":
         # Products functions
         pass
