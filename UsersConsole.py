@@ -38,20 +38,27 @@ class UserConsole:
             elif option == "2":
                 # get a single user
                 userID = input("Insert user ID: ")
-                users.getUserByID(userID=userID)
+                if userID.isnumeric():
+                    users.getUserByID(userID=userID)
+                else:
+                    print("Invalid input for ID")
             elif option == "3":
                 # search user
                 query = input("Insert query to search for users: ")
                 users.getUsersSearch(query=query)
             elif option == "4":
                 # filter users
-                pass
+                users.getUsersFilter()
             elif option == "5":
                 # limit & skip user
-                pass
+                users.getUsersLimit()
             elif option == "6":
                 # get user's carts
-                pass
+                userID = input("Insert user ID: ")
+                if userID.isnumeric():
+                    users.getUserCartsByID(userID=userID)
+                else:
+                    print("Invalid input for ID")
             elif option == "7":
                 # get user's posts
                 pass

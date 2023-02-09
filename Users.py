@@ -50,3 +50,35 @@ class Users:
                 print("--------------------------------------------------------------")
         else:
             print("Error getting users that match query ( " + query + " )")
+        
+    # TODO filter users
+    def getUsersFilter(self):
+        pass
+
+    # TODO skip and limit users
+    def getUsersLimit(self):
+        pass
+
+    # get user's carts
+    def getUserCartsByID(self, userID):
+        URL = self.url + "/" + userID + "/carts"
+
+        response = requests.get(URL)
+
+        if response:
+            responseJSON = response.json()
+            print("--------------------------------------------------------------")
+            for cart in responseJSON["carts"]:
+                for cartKey, cartValue in cart.items():
+                    if cartKey == "products":
+                        print(cartKey + ": ")
+                        for product in cartValue:
+                            print("/////////////////////////////////////////////////")
+                            for productKey, productValue in product.items():
+                                    print("     " + productKey + ": ", productValue)
+                            print("/////////////////////////////////////////////////")
+                    else:
+                        print(cartKey + ": ", cartValue)
+            print("--------------------------------------------------------------")
+        else:
+            print("Error getting user's carts with ID ( " + userID + " )")
