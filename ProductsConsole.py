@@ -1,8 +1,11 @@
 import os
+from Products import Products
 
 class ProductConsole:
 
     def productFunctionsMenu():
+        products = Products()
+
         if os.name == "posix":
             os.system("clear")
         else:
@@ -30,7 +33,7 @@ class ProductConsole:
 
             if option == "1":
                 # get all products
-                pass
+                products.getAllProducts()
             elif option == "2":
                 # get a single product
                 pass
