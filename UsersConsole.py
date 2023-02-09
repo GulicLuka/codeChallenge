@@ -41,7 +41,8 @@ class UserConsole:
                 users.getUserByID(userID=userID)
             elif option == "3":
                 # search user
-                pass           
+                query = input("Insert query to search for users: ")
+                users.getUsersSearch(query=query)
             elif option == "4":
                 # filter users
                 pass
