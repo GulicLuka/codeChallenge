@@ -81,7 +81,11 @@ class UserConsole:
                 pass
             elif option == "11":
                 # delete user
-                pass
+                userID = input("Insert user ID: ")
+                if userID.isnumeric():
+                    users.deleteUser(userID=userID)
+                else:
+                    print("Invalid input for ID")
             elif option == "0":
                 # go back
                 return

@@ -125,3 +125,22 @@ class Users:
                     print(key + ": ", value)
         else:
             print("Error getting user's todos with ID ( " + userID + " )")
+
+    # TODO add new user
+    def addUser(self):
+        pass
+
+    # TODO update user
+    def updateUser(self):
+        pass
+
+    # delete user
+    def deleteUser(self, userID):
+        URL = self.url + "/" + userID
+
+        response = requests.delete(URL)
+
+        if response:
+            print("user deleted succesfully")
+        else:
+            print("Error deleting user with ID ( " + userID + " )")
