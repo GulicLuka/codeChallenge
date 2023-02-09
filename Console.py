@@ -1,6 +1,7 @@
 import os
 from UsersConsole import UserConsole
 from CartsConsole import CartConsole
+from ProductsConsole import ProductConsole
 
 while True:
     if os.name == "posix":
@@ -24,7 +25,7 @@ while True:
         CartConsole.cartFunctionsMenu()
     elif option == "3":
         # Products functions
-        pass
+        ProductConsole.productFunctionsMenu()
     else:
         # invalid selection
         print("Invalid option, try selecting number from 1 to 3")
