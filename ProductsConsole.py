@@ -36,16 +36,21 @@ class ProductConsole:
                 products.getAllProducts()
             elif option == "2":
                 # get a single product
-                pass
+                productID = input("Insert user ID: ")
+                if productID.isnumeric():
+                    products.getProductByID(productID=productID)
+                else:
+                    print("Invalid input for ID")
             elif option == "3":
                 # search products
-                pass           
+                query = input("Insert query to search for users: ")
+                products.searchProducts(query=query)      
             elif option == "4":
                 # limit & skip product
                 pass
             elif option == "5":
                 # get all prodict categories
-                pass
+                products.getProductsCategories()
             elif option == "6":
                 # get product of category
                 pass
