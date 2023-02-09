@@ -82,3 +82,25 @@ class Users:
             print("--------------------------------------------------------------")
         else:
             print("Error getting user's carts with ID ( " + userID + " )")
+
+    # get user's posts
+    def getUserPostsByID(self, userID):
+        URL = self.url + "/" + userID + "/posts"
+
+        response = requests.get(URL)
+
+        if response:
+            responseJSON = response.json()
+            print("--------------------------------------------------------------")
+            for key, value in responseJSON.items():
+                if key == "posts":
+                    for post in value:
+                        print("/////////////////////////////////////////////////")
+                        for postKey, postValue in post.items():
+                            print("     " + postKey + ": ", postValue)
+                        print("/////////////////////////////////////////////////")
+                else:
+                    print(key + ": ", value)
+            print("--------------------------------------------------------------")
+        else:
+            print("Error getting user's posts with ID ( " + userID + " )")

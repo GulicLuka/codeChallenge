@@ -61,7 +61,11 @@ class UserConsole:
                     print("Invalid input for ID")
             elif option == "7":
                 # get user's posts
-                pass
+                userID = input("Insert user ID: ")
+                if userID.isnumeric():
+                    users.getUserPostsByID(userID=userID)
+                else:
+                    print("Invalid input for ID")
             elif option == "8":
                 # get user's todos
                 pass
