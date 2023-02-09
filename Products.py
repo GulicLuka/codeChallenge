@@ -81,4 +81,25 @@ class Products:
         else:
             print("Error getting products categories")
 
-    
+    #TODO get products of category
+    def getProductsOfCategory(self, category):
+        pass
+
+    #TODO add new product
+    def addProduct(self):
+        pass
+
+    #TODO update product
+    def updateProduct(self):
+        pass
+
+    # delete product
+    def deleteProduct(self, productID):
+        URL = self.url + "/" + productID
+
+        response = requests.delete(URL)
+
+        if response:
+            print("user deleted succesfully")
+        else:
+            print("Error deleting user with ID ( " + productID + " )")
