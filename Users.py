@@ -104,3 +104,24 @@ class Users:
             print("--------------------------------------------------------------")
         else:
             print("Error getting user's posts with ID ( " + userID + " )")
+
+    # get user's todos
+    def getUserTodosByID(self, userID):
+        URL = self.url + "/" + userID + "/todos"
+
+        response = requests.get(URL)
+
+        if response:
+            responseJSON = response.json()
+            print("--------------------------------------------------------------")
+            for key, value in responseJSON.items():
+                if key == "todos":
+                    for todo in value:
+                        print("/////////////////////////////////////////////////")
+                        for todoKey, todoValue in todo.items():
+                            print("     " + todoKey + ": ", todoValue)
+                        print("/////////////////////////////////////////////////")
+                else:
+                    print(key + ": ", value)
+        else:
+            print("Error getting user's todos with ID ( " + userID + " )")

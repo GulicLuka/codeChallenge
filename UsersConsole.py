@@ -68,7 +68,11 @@ class UserConsole:
                     print("Invalid input for ID")
             elif option == "8":
                 # get user's todos
-                pass
+                userID = input("Insert user ID: ")
+                if userID.isnumeric():
+                    users.getUserTodosByID(userID=userID)
+                else:
+                    print("Invalid input for ID")
             elif option == "9":
                 # add user
                 pass
