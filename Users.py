@@ -12,7 +12,19 @@ class Users:
         if response:
             responseJSON = response.json()
             for user in responseJSON["users"]:
-                print("--------------------------------")
+                print("--------------------------------------------------------------")
                 for key, value in user.items():
                     print(key + ": ", value)
-                print("--------------------------------")
+                print("--------------------------------------------------------------")
+
+    def getUserByID(self, userID):
+        URL = self.url + "/" + userID
+
+        response = requests.get(URL)
+
+        if response:
+            responseJSON = response.json()
+            print("--------------------------------------------------------------")
+            for key, value in responseJSON.items():
+                print(key + ": ", value)
+            print("--------------------------------------------------------------") 

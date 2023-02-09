@@ -37,7 +37,8 @@ class UserConsole:
                 users.getAllUsers()
             elif option == "2":
                 # get a single user
-                pass
+                userID = input("Insert user ID: ")
+                users.getUserByID(userID=userID)
             elif option == "3":
                 # search user
                 pass           
