@@ -33,7 +33,11 @@ class CartConsole:
                 carts.getAllCarts()
             elif option == "2":
                 # get a single cart
-                pass
+                cartID = input("Insert user ID: ")
+                if cartID.isnumeric():
+                    carts.getCartByID(cartID=cartID)
+                else:
+                    print("Invalid input for ID")
             elif option == "3":
                 # get carts of user
                 pass           
