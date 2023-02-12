@@ -1,5 +1,6 @@
 import requests
 import json
+from mergedeep import merge
 
 class Users:
     def __init__(self):
@@ -55,9 +56,26 @@ class Users:
         else:
             print("Error getting users that match query ( " + query + " )")
         
-    # TODO filter users
-    def getUsersFilter(self):
-        pass
+    # filter users
+    def getUsersFilter(self, skip, limit, filter, selections):
+        URL = self.selectItems(skip=skip, limit=limit, selections=selections, url=self.url + "/filter")
+        if skip.isnumeric() or limit.isnumeric() or all(el in self.getParameterKeys() for el in selections):
+            for key, value in filter.items():
+                if len(value.strip()) > 1:
+                    URL += "&key=" + key + "&value=" + value
+                    break
+        else:
+            for key, value in filter.items():
+                if len(value.strip()) > 1:
+                    URL += "?key=" + key + "&value=" + value
+                    break
+                
+        response = requests.get(URL)
+        if response:
+            print(response.json())
+        else:
+            print("Couldn't get filtered data")
+
 
     # build url for skip and limit
     def skipLimitUrl(self, skip, limit, url):
@@ -195,16 +213,50 @@ class Users:
                         print("/////////////////////////////////////////////////")
                 else:
                     print(key + ": ", value)
+            print("--------------------------------------------------------------")
         else:
             print("Error getting user's todos with ID ( " + userID + " )")
 
-    # TODO add new user
-    def addUser(self):
-        pass
+    # add new user
+    def addUser(self, inputDict):
+        URL = self.url + "/add"
+        
+        data = self.buildDataDict(inputDict=inputDict)
 
-    # TODO update user
-    def updateUser(self):
-        pass
+        response = requests.post(
+            URL,
+            headers={
+                "Content-Type": "application/json"
+            },
+            data=json.dumps(data)
+            )
+    
+        if response:
+            print("User added successfuly")
+            #print(response.json())
+        else:
+            print("Error adding new User")
+
+
+    # update user
+    def updateUser(self, userID , inputDict):
+        URL = self.url + "/" + userID
+
+        data = self.buildDataDict(inputDict=inputDict)
+
+        response = requests.put(
+            URL,
+            headers={
+                "Content-Type": "application/json"
+            },
+            data=json.dumps(data)
+        )
+
+        if response:
+            print("User", userID, "updated successfuly")
+            print(response.json())
+        else:
+            print("Error updating user ( " + userID + " )")
 
     # delete user
     def deleteUser(self, userID):
@@ -247,4 +299,24 @@ class Users:
                     par.extend(self.parameterRecursion(key, d+"."+key))
         return par
     
-            
+
+    def buildDataDict(self, inputDict):
+        data = {}
+
+        for key, value in inputDict.items():
+            if len(value.strip()) > 0:
+                if "." not in key:
+                    keys = [ key ]
+                else:
+                    keys = key.split(".")
+                merge(data, self.buildDictRecursion(buildDict={}, keys=keys, value=value))
+
+        return data
+    
+    def buildDictRecursion(self, buildDict, keys, value):
+        if len(keys) == 1:
+            buildDict[keys[0]] = value
+            return buildDict
+        
+        buildDict[keys[0]] = self.buildDictRecursion(buildDict={}, keys=keys[1:], value=value)
+        return buildDict

@@ -51,7 +51,12 @@ class UserConsole:
                 users.getUsersSearch(query=query)
             elif option == "4":
                 # filter users
-                users.getUsersFilter()
+                limit = input("number of items you would like to get (0 - get all items): ")
+                skip = input("number of items you would like to skip: ")
+                selections = UserConsole.getSelections(keys=users.getParameterKeys())
+                print("Write value into the one you want to filter, only first one will be used others will be ignored:")
+                filter = UserConsole.getValues(keys=users.getParameterKeys())
+                users.getUsersFilter(skip=skip, limit=limit, selections=selections, filter=filter)
             elif option == "5":
                 # limit & skip user
                 limit = input("number of items you would like to get (0 - get all items): ")
@@ -81,10 +86,20 @@ class UserConsole:
                     print("Invalid input for ID")
             elif option == "9":
                 # add user
+                print("Input user data")
+                inputDict = UserConsole.getValues(keys=users.getParameterKeys())
+                users.addUser(inputDict=inputDict)
                 pass
             elif option == "10":
                 # update user
-                pass
+                userID = input("Input user ID that you want to update: ")
+                if userID.isnumeric():
+                    print("Input user data that you want to update")
+                    inputDict = UserConsole.getValues(keys=users.getParameterKeys())
+                    users.updateUser(userID=userID,inputDict=inputDict)
+                else:
+                    print("Invalid input for ID")
+                    
             elif option == "11":
                 # delete user
                 userID = input("Insert user ID: ")
@@ -123,3 +138,14 @@ class UserConsole:
             print("Invalid input")
             return None
         return list(selections)
+    
+    def getValues(keys):
+        inputDict = {}
+        for key in keys:
+            if "." in key:
+                inputMessage = " ".join(key.split(".")) + ": "
+                value = input(inputMessage)
+            else:
+                value = input(key + ": ")
+            inputDict[key] = value
+        return inputDict
