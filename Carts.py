@@ -1,6 +1,5 @@
 import requests
 import json
-from mergedeep import merge
 
 class Carts:
     def __init__(self):
