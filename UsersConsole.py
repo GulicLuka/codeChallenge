@@ -26,6 +26,7 @@ class UserConsole:
             print("9:   Add a new User")
             print("10:  Update an existing User")
             print("11:  Delete User")
+            print("12:  search filter")
             print("0:   Back")
             print()
             print("*******************************************")
@@ -106,11 +107,14 @@ class UserConsole:
                     users.deleteUser(userID=userID)
                 else:
                     print("Invalid input for ID")
+            elif option == "12":
+                searchInput = input("search Users by: ")
+                users.searchFilter(searchInput=searchInput)
             elif option == "0":
                 # go back
                 return
             else:
-                print("Invalid option, try selecting number from 0 to 11")
+                print("Invalid option, try selecting number from 0 to 12")
 
     def getSelections(keys):
         for i, key in enumerate(keys):

@@ -34,4 +34,4 @@ while True:
         SaveImage.saveImageLocally(url)
     else:
         # invalid selection
-        print("Invalid option, try selecting number from 1 to 3")
+        print("Invalid option, try selecting number from 1 to 4")

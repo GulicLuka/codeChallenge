@@ -320,3 +320,43 @@ class Users:
         
         buildDict[keys[0]] = self.buildDictRecursion(buildDict={}, keys=keys[1:], value=value)
         return buildDict
+
+
+    def searchFilter(self, searchInput):
+        URL = self.selectItems(skip="0", limit="0", selections=self.parameters, url=self.url)
+
+        response = requests.get(URL)
+
+        if response:
+            searchedData = []
+
+            responseJSON = response.json()
+
+            for user in responseJSON["users"]:
+                matchesInput = self.recursiveSearch(JSON=user, searchInput=searchInput)
+                if any(matchesInput):
+                    searchedData.append(user)
+
+            for user in searchedData:
+                print("--------------------------------------------------------------")
+                for key, value in user.items():
+                    print(key + ": ", value)
+                print("--------------------------------------------------------------")
+
+        else:
+            print("error")
+
+
+    def recursiveSearch(self, JSON, searchInput):
+        if not isinstance(JSON, dict) and searchInput.lower() in str(JSON).lower():
+            return [ True ]
+        elif not isinstance(JSON, dict) and searchInput.lower() not in str(JSON).lower():
+            return [ False ]
+        
+        par = []
+        for value in JSON.values():
+            par.extend(self.recursiveSearch(value, searchInput))
+
+        return par
+
+        
