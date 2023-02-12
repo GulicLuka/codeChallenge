@@ -156,17 +156,63 @@ class Products:
         else:
             print("Error getting products categories")
 
-    #TODO get products of category
+    # get products of category
     def getProductsOfCategory(self, category):
-        pass
+        URL = self.url + "/category/" + category
 
-    #TODO add new product
-    def addProduct(self):
-        pass
+        response = requests.get(URL)
 
-    #TODO update product
-    def updateProduct(self):
-        pass
+        if response:
+            responseJSON = response.json()
+
+            for key, value in responseJSON.items():
+                if key == "products":
+                    for product in value:
+                        print("--------------------------------------------------------------")
+                        for productKey, productValue in product.items():
+                            print(productKey + ": ", productValue)
+                        print("--------------------------------------------------------------")
+                else:
+                    print(key + ": ", value)
+
+
+    # add new product
+    def addProduct(self, inputDict):
+        URL = self.url + "/add"
+
+        data = inputDict
+        response = requests.post(
+            URL,
+            headers={
+                "Content-Type": "application/json"
+            },
+            data=json.dumps(data)
+            )
+    
+        if response:
+            print("Product added successfuly")
+            print(response.json())
+        else:
+            print("Error adding new Product")
+
+    # update product
+    def updateProduct(self, productID, inputDict):
+        URL = self.url + "/" + productID
+
+        data = inputDict
+        response = requests.put(
+            URL,
+            headers={
+                "Content-Type": "application/json"
+            },
+            data=json.dumps(data)
+            )
+    
+        if response:
+            print("Product updated successfuly")
+            print(response.json())
+        else:
+            print("Error updating Product")
 
     # delete product
     def deleteProduct(self, productID):

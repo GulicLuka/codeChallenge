@@ -59,16 +59,33 @@ class ProductConsole:
                 products.getProductsCategories()
             elif option == "6":
                 # get product of category
-                pass
+                products.getProductsCategories()
+                category = input("write name of one category from above: ")
+                products.getProductsOfCategory(category=category)
+
             elif option == "7":
                 # add product
-                pass
+                print("Input product data")
+                inputDict = ProductConsole.getValues(keys=products.getParameterKeys())
+                products.addProduct(inputDict=inputDict)
             elif option == "8":
                 # update product
-                pass
+                productID = input("Insert user ID: ")
+                if productID.isnumeric():
+                    print("Update product data")
+                    inputDict = ProductConsole.getValues(keys=products.getParameterKeys())
+                    products.updateProduct(inputDict=inputDict, productID=productID)
+                else:
+                    print("Invalid input for ID")
+
             elif option == "9":
                 # delete product
-                pass
+                productID = input("Insert user ID: ")
+                if productID.isnumeric():
+                    products.deleteProduct(productID=productID)
+                else:
+                    print("Invalid input for ID")
+
             elif option == "0":
                 # go back
                 return
@@ -101,3 +118,27 @@ class ProductConsole:
             print("Invalid input")
             return None
         return list(selections)
+    
+    def getValues(keys):
+        inputDict = {}
+        images = []
+        for key in keys:
+            if key == "images":
+                continueSelection = "y"
+                while continueSelection == "y":
+
+                    src = input("image URL: ")
+                    images.append(src)
+                    value = images
+
+                    wrongInput = True
+                    while wrongInput:
+                        continueSelection = input("Do you want to merge with existing cart (y - YES, n - NO):")
+                        if continueSelection == "y" or continueSelection == "n":
+                            wrongInput = False
+
+            else:
+                value = input(key + ": ")
+
+            inputDict[key] = value
+        return inputDict
