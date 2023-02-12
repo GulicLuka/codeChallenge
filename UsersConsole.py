@@ -89,7 +89,6 @@ class UserConsole:
                 print("Input user data")
                 inputDict = UserConsole.getValues(keys=users.getParameterKeys())
                 users.addUser(inputDict=inputDict)
-                pass
             elif option == "10":
                 # update user
                 userID = input("Input user ID that you want to update: ")

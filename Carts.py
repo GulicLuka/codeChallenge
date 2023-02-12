@@ -1,11 +1,10 @@
 import requests
 import json
-
+from mergedeep import merge
 
 class Carts:
     def __init__(self):
         self.url = "https://dummyjson.com/carts"
-
 
     # get all carts
     def getAllCarts(self):
@@ -75,13 +74,57 @@ class Carts:
         else:
             print("Error getting user carts with ID ( " + userID + " )")
 
-    # TODO add cart
-    def addCart(self):
-        pass
+    # add cart
+    def addCart(self, inputList):
+        URL = self.url + "/add"
+        
+        data = {"userId": 1, "products": inputList}
 
-    # TODO update cart
-    def updateCart(self):
-        pass
+        response = requests.post(
+            URL,
+            headers={
+                "Content-Type": "application/json"
+            },
+            data=json.dumps(data)
+            )
+    
+        if response:
+            print("Cart added successfuly")
+            print(response.json())
+        else:
+            print("Error adding new Cart")
+
+    # update cart
+    def updateCart(self, inputList, cartID):
+        URL = self.url + "/" + cartID
+        
+
+        wrongInput = True
+        while wrongInput:
+            mergeExistingData = input("Do you want to merge with existing cart (y - YES, n - NO):")
+            if mergeExistingData == "y" or mergeExistingData == "n":
+                wrongInput = False
+        
+        if mergeExistingData == "y":
+            mergeData = True
+        else:
+            mergeData = False
+
+        data = {"merge": mergeData, "userId": 1, "products": inputList}
+
+        response = requests.put(
+            URL,
+            headers={
+                "Content-Type": "application/json"
+            },
+            data=json.dumps(data)
+            )
+    
+        if response:
+            print("Cart updated successfuly")
+            print(response.json())
+        else:
+            print("Error updating Cart")
 
     # delete cart
     def deleteCart(self, cartID):
@@ -94,5 +137,4 @@ class Carts:
         else:
             print("Error deleting cart with ID ( " + cartID + " )")
 
-
-
+    

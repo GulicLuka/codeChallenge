@@ -29,6 +29,9 @@ class ProductConsole:
             print()
             print("*******************************************")
 
+            # used just to get parameters
+            #products.getParameters()
+
             option = input("Input your selection: ")
 
             if option == "1":
@@ -47,7 +50,10 @@ class ProductConsole:
                 products.searchProducts(query=query)      
             elif option == "4":
                 # limit & skip product
-                pass
+                limit = input("number of items you would like to get (0 - get all items): ")
+                skip = input("number of items you would like to skip: ")
+                selections = ProductConsole.getSelections(keys=products.getParameterKeys())
+                products.limitSkipProducts(limit=limit, skip=skip, selections=selections)
             elif option == "5":
                 # get all prodict categories
                 products.getProductsCategories()
@@ -68,3 +74,30 @@ class ProductConsole:
                 return
             else:
                 print("Invalid option, try selecting number from 0 to 9")
+
+
+    def getSelections(keys):
+        for i, key in enumerate(keys):
+            print(i,key)
+
+        selectString = input("write comma separated numbers, that you want to select from list above: ")
+        if len(selectString) > 1:
+            itemIDs = selectString.split(",")
+        else:
+            itemIDs = list(selectString)
+
+        itemIDsInt = []
+        for item in itemIDs:
+            if item.isnumeric():
+                try:
+                    num = int(item)
+                    if num < len(keys):
+                        itemIDsInt.append(num)
+                except Exception:
+                    pass
+        try:        
+            selections = map(keys.__getitem__, itemIDsInt)
+        except Exception:
+            print("Invalid input")
+            return None
+        return list(selections)

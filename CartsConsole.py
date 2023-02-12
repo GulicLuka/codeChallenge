@@ -1,10 +1,12 @@
 import os
 from Carts import Carts
+from Products import Products
 
 class CartConsole:
 
     def cartFunctionsMenu():
         carts = Carts()
+        products = Products()
 
         if os.name == "posix":
             os.system("clear")
@@ -47,10 +49,18 @@ class CartConsole:
                     print("Invalid input for ID")       
             elif option == "4":
                 # add cart
-                pass
+                print("Input cart data")
+                inputList = CartConsole.getValues(products)
+                carts.addCart(inputList=inputList)
             elif option == "5":
                 # update cart
-                pass
+                cartID = input("Insert cart ID: ")
+                if cartID.isnumeric():
+                    print("Update cart with items")
+                    inputList = CartConsole.getValues(products)
+                    carts.updateCart(inputList=inputList, cartID=cartID)
+                else:
+                    print("Invalid input for ID")
             elif option == "6":
                 # delete cart
                 cartID = input("Insert cart ID: ")
@@ -63,3 +73,42 @@ class CartConsole:
                 return
             else:
                 print("Invalid option, try selecting number from 0 to 6")
+
+    def getValues(products):
+        products.limitSkipProducts(limit="0", skip="0", selections=["id", "title"])
+
+        inputList = []
+
+        continueSelection = "y"
+
+        while continueSelection == "y":
+            tempDict = {}
+
+            while True:
+                selection = input("Number of selected product: ")
+                try:
+                    selection = int(selection)
+                    break
+                except Exception:
+                    continue
+            
+            while True:
+                quantity = input("Quantity of selected product: ")
+                try:
+                    quantity = int(quantity)
+                    break
+                except Exception:
+                    continue
+
+            tempDict["id"] = selection
+            tempDict["quantity"] = quantity
+
+            inputList.append(tempDict)
+
+            wrongInput = True
+            while wrongInput:
+                continueSelection = input("Do you want to add another item (y - YES, n - NO): ")
+                if continueSelection == "y" or continueSelection == "n":
+                    wrongInput = False
+
+        return inputList
