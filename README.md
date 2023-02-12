@@ -1,26 +1,26 @@
-## codeChallenge
+# codeChallenge
 Code Challenge for SRC
 
-## Run 
+# Run 
 Run console.py in terminal 
 
-## Used libraries
+# Used libraries
 
-# requests
+## requests
 install requests
 ```
 pip install requests
 ```
-# os
+## os
 install os
 ```
 pip install os_sys
 ```
-# mergedeep
+## mergedeep
 install merge
 ```
 pip install mergedeep
 ```
 
-# json
+## json
 
