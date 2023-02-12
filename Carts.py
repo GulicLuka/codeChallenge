@@ -137,4 +137,33 @@ class Carts:
         else:
             print("Error deleting cart with ID ( " + cartID + " )")
 
+
+    def searchFilter(self, searchInput):
+
+        response = requests.get(self.url)
+
+        searchedData = []
+
+        if response:
+            responseJSON = response.json()
+
+            for cart in responseJSON["carts"]:
+                for product in cart["products"]:
+                    for value in product.values():
+                        if searchInput.lower() in str(value).lower():
+                            searchedData.append(cart)
+                            break
     
+            for cart in searchedData:
+                print("--------------------------------------------------------------")
+                for cartKey, cartValue in cart.items():
+                    if cartKey == "products":
+                        print(cartKey + ": ")
+                        for product in cartValue:
+                            print("/////////////////////////////////////////////////")
+                            for productKey, productValue in product.items():
+                                print("     " + productKey + ": ", productValue)
+                            print("/////////////////////////////////////////////////")
+                    else:
+                        print(cartKey + ": ", cartValue)
+                print("--------------------------------------------------------------")

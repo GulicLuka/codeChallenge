@@ -24,6 +24,7 @@ class CartConsole:
             print("4:   Add a new Cart")
             print("5:   Update an existing Cart")
             print("6:   Delete Cart")
+            print("7:   Search filter")
             print("0:   Back")
             print()
             print("*******************************************")
@@ -68,11 +69,14 @@ class CartConsole:
                     carts.deleteCart(cartID=cartID)
                 else:
                     print("Invalid input for ID")
+            elif option == "7":
+                searchInput = input("search Carts by: ")
+                carts.searchFilter(searchInput=searchInput)
             elif option == "0":
                 # go back
                 return
             else:
-                print("Invalid option, try selecting number from 0 to 6")
+                print("Invalid option, try selecting number from 0 to 7")
 
     def getValues(products):
         products.limitSkipProducts(limit="0", skip="0", selections=["id", "title"])
