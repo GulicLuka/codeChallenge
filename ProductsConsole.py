@@ -14,7 +14,7 @@ class ProductConsole:
         while True:
             print("*******************************************")
             print()
-            print("USERS")
+            print("PRODUCTS")
             print("Select function:")
             print("1:   Get all Products")
             print("2:   Get a Single Product")
@@ -25,6 +25,7 @@ class ProductConsole:
             print("7:   Add a new Product")
             print("8:   Update an existing Product")
             print("9:   Delete Product")
+            print("10:  Search filter")
             print("0:   Back")
             print()
             print("*******************************************")
@@ -86,11 +87,14 @@ class ProductConsole:
                 else:
                     print("Invalid input for ID")
 
+            elif option == "10":
+                searchInput = input("search Products by: ")
+                products.searchFilter(searchInput=searchInput)
             elif option == "0":
                 # go back
                 return
             else:
-                print("Invalid option, try selecting number from 0 to 9")
+                print("Invalid option, try selecting number from 0 to 10")
 
 
     def getSelections(keys):

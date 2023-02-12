@@ -252,3 +252,29 @@ class Products:
                 else:
                     par.extend(self.parameterRecursion(key, d+"."+key))
         return par
+    
+
+    def searchFilter(self, searchInput):
+        URL = self.selectItems(skip="0", limit="0", selections=self.parameters, url=self.url)
+
+        response = requests.get(URL)
+
+        if response:
+            searchedData = []
+
+            responseJSON = response.json()
+
+            for product in responseJSON["products"]:
+                for value in product.values():
+                    if searchInput.lower() in str(value).lower():
+                        searchedData.append(product)
+                        break
+
+            for product in searchedData:
+                print("--------------------------------------------------------------")
+                for key, value in product.items():
+                    print(key + ": ", value)
+                print("--------------------------------------------------------------")
+
+        else:
+            print("error")
